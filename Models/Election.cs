@@ -8,7 +8,7 @@ namespace OnlineVoting.Models
     public class Election
     {
         [Key]
-        public int ElectionId { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string ElectionName { get; set; }
         public DateTime StartDate { get; set; }

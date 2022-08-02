@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OnlineVoting.Data.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineVoting.Models
 {
-    public class Candidate
+    public class Candidate : IEntityBase
     {
         [Key]
-        public int CandidateId { get; set; }
+        public int Id { get; set; }
         public string CandidateIcon { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string CandidateName { get; set; }

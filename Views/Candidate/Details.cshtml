@@ -1,0 +1,43 @@
+﻿@model OnlineVoting.Models.Candidate
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Candidate</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CandidateIcon)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CandidateIcon)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CandidateName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CandidateName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CandidateVoteCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CandidateVoteCount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Position)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Position.PositionTitle)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -29,7 +29,7 @@
                             <p class="card-text">
                                 <a class="btn btn-success text-white">
                                 <i class="check"></i> Vote</a>
-                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.CandidateId">
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
                                     <i class="bi bi-eye-fill"></i> Show Details
                                 </a>
                             </p>
@@ -39,4 +39,8 @@
             </div>
         </div>
     }
+</div>
+
+<div class="text-white" style="position:fixed; right:25px;bottom:25px;">
+    <a asp-controller="Candidate" asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle" ></i>  Add New</a>
 </div>

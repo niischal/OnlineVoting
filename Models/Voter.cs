@@ -6,7 +6,7 @@ namespace OnlineVoting.Models
     public class Voter
     {
         [Key]
-        public int VoterId { get; set; }
+        public int Id { get; set; }
 
         [Column(TypeName = "varchar(100)")]
         public string Firstname { get; set; }

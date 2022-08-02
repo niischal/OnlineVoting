@@ -6,7 +6,7 @@ namespace OnlineVoting.Models
     public class Position
     {
         [Key]
-        public int PositionId { get; set; }
+        public int Id { get; set; }
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string PositionTitle { get; set; }

@@ -6,7 +6,7 @@ namespace OnlineVoting.Models
     public class Policy
     {
         [Key]
-        public int PolicyID { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string PolicyTitle { get; set; }
         [Column(TypeName = "varchar(200)")]

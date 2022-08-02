@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineVoting.Data;
+using OnlineVoting.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<ICandidatesService,CandidatesService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
