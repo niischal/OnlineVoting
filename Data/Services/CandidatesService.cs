@@ -6,8 +6,12 @@ namespace OnlineVoting.Data.Services
 {
     public class CandidatesService : EntityBaseRepository<Candidate>, ICandidatesService
     {
-        public CandidatesService(AppDbContext context) : base(context) { }
+        private readonly AppDbContext _context;
+        public CandidatesService(AppDbContext context) : base(context)
+        {             
+            _context=context;
+        }
        
-       
+        
     }
 }

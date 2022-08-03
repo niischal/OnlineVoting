@@ -13,9 +13,9 @@ namespace OnlineVoting.Migrations
                 name: "Elections",
                 columns: table => new
                 {
-                    ElectionId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ElectionName = table.Column<string>(type: "varchar(100)", nullable: false),
+                    ElectionName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Decription = table.Column<string>(type: "varchar(200)", nullable: true),
@@ -24,28 +24,28 @@ namespace OnlineVoting.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Elections", x => x.ElectionId);
+                    table.PrimaryKey("PK_Elections", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Policies",
                 columns: table => new
                 {
-                    PolicyID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PolicyTitle = table.Column<string>(type: "varchar(100)", nullable: false),
+                    PolicyTitle = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     PolicyDescription = table.Column<string>(type: "varchar(200)", nullable: true),
                     PolicyYesVote = table.Column<int>(type: "int", nullable: false),
                     ElectionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Policies", x => x.PolicyID);
+                    table.PrimaryKey("PK_Policies", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Policies_Elections_ElectionId",
                         column: x => x.ElectionId,
                         principalTable: "Elections",
-                        principalColumn: "ElectionId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -53,20 +53,20 @@ namespace OnlineVoting.Migrations
                 name: "Positions",
                 columns: table => new
                 {
-                    PositionId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PositionTitle = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "varchar(MAX)", nullable: true),
                     ElectionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Positions", x => x.PositionId);
+                    table.PrimaryKey("PK_Positions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Positions_Elections_ElectionId",
                         column: x => x.ElectionId,
                         principalTable: "Elections",
-                        principalColumn: "ElectionId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -74,22 +74,22 @@ namespace OnlineVoting.Migrations
                 name: "Voters",
                 columns: table => new
                 {
-                    VoterId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Firstname = table.Column<string>(type: "varchar(100)", nullable: false),
-                    LastName = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Firstname = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     IsValid = table.Column<bool>(type: "bit", nullable: false),
-                    UniqueId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UniqueId = table.Column<string>(type: "varchar(100)", nullable: false),
                     ElectionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Voters", x => x.VoterId);
+                    table.PrimaryKey("PK_Voters", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Voters_Elections_ElectionId",
                         column: x => x.ElectionId,
                         principalTable: "Elections",
-                        principalColumn: "ElectionId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -97,21 +97,21 @@ namespace OnlineVoting.Migrations
                 name: "Candidates",
                 columns: table => new
                 {
-                    CandidateId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CandidateIcon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CandidateName = table.Column<string>(type: "varchar(100)", nullable: false),
-                    CandidateVoteCount = table.Column<int>(type: "int", nullable: true),
+                    CandidateName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CandidateVoteCount = table.Column<int>(type: "int", nullable: false),
                     PositionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Candidates", x => x.CandidateId);
+                    table.PrimaryKey("PK_Candidates", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Candidates_Positions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Positions",
-                        principalColumn: "PositionId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

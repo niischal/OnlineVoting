@@ -41,5 +41,7 @@ namespace OnlineVoting.Controllers
             if (candidate == null) return View("Empty");
             return View(candidate);
         }
+
+        
     }
 }

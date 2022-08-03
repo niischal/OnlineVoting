@@ -12,8 +12,8 @@ using OnlineVoting.Data;
 namespace OnlineVoting.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220801063225_candidateVoteCount-notNull")]
-    partial class candidateVoteCountnotNull
+    [Migration("20220803041002_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,11 @@ namespace OnlineVoting.Migrations
 
             modelBuilder.Entity("OnlineVoting.Models.Candidate", b =>
                 {
-                    b.Property<int>("CandidateId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CandidateId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CandidateIcon")
                         .IsRequired()
@@ -38,7 +38,8 @@ namespace OnlineVoting.Migrations
 
                     b.Property<string>("CandidateName")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("CandidateVoteCount")
                         .HasColumnType("int");
@@ -46,7 +47,7 @@ namespace OnlineVoting.Migrations
                     b.Property<int>("PositionId")
                         .HasColumnType("int");
 
-                    b.HasKey("CandidateId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PositionId");
 
@@ -55,18 +56,19 @@ namespace OnlineVoting.Migrations
 
             modelBuilder.Entity("OnlineVoting.Models.Election", b =>
                 {
-                    b.Property<int>("ElectionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ElectionId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Decription")
                         .HasColumnType("varchar(200)");
 
                     b.Property<string>("ElectionName")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("ElectionState")
                         .HasColumnType("int");
@@ -80,18 +82,18 @@ namespace OnlineVoting.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ElectionId");
+                    b.HasKey("Id");
 
                     b.ToTable("Elections");
                 });
 
             modelBuilder.Entity("OnlineVoting.Models.Policy", b =>
                 {
-                    b.Property<int>("PolicyID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PolicyID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ElectionId")
                         .HasColumnType("int");
@@ -101,12 +103,13 @@ namespace OnlineVoting.Migrations
 
                     b.Property<string>("PolicyTitle")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("PolicyYesVote")
                         .HasColumnType("int");
 
-                    b.HasKey("PolicyID");
+                    b.HasKey("Id");
 
                     b.HasIndex("ElectionId");
 
@@ -115,14 +118,14 @@ namespace OnlineVoting.Migrations
 
             modelBuilder.Entity("OnlineVoting.Models.Position", b =>
                 {
-                    b.Property<int>("PositionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PositionId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(MAX)");
 
                     b.Property<int>("ElectionId")
                         .HasColumnType("int");
@@ -131,7 +134,7 @@ namespace OnlineVoting.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.HasKey("PositionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ElectionId");
 
@@ -140,31 +143,33 @@ namespace OnlineVoting.Migrations
 
             modelBuilder.Entity("OnlineVoting.Models.Voter", b =>
                 {
-                    b.Property<int>("VoterId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VoterId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ElectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<bool>("IsValid")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("varchar(200)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("UniqueId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)");
 
-                    b.HasKey("VoterId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ElectionId");
 

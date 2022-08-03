@@ -3,7 +3,7 @@ using OnlineVoting.Models;
 
 namespace OnlineVoting.Data.Services
 {
-    public interface ICandidatesService : IEntityBaseRepository<Candidate>
+    public interface IPositionService : IEntityBaseRepository<Position>
     {
     }
 }

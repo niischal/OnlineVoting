@@ -16,21 +16,17 @@
                 @Html.DisplayNameFor(model => model.ElectionName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Decription)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ElectionType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ElectionState)
             </th>
-            <th></th>
+            <th>
+                Management
+            </th>
+            <th>
+                Add Position
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -40,24 +36,31 @@
                 @Html.DisplayFor(modelItem => item.ElectionName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Decription)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.ElectionType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ElectionState)
+                    @if(DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
+                    {
+                        <span>Running</span>
+                    } 
+                    else if(DateTime.Now <= item.StartDate)
+                    {
+                        <span>Not Started</span>
+                    }
+                    else
+                    {
+                        <span>Ended</span>
+                    }
+                </td>
+            <td>
+                <a asp-action="Update" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-info-square-fill"></i></a> |
+                <a asp-action="Remove" asp-route-id="@item.Id"><i class="bi bi-trash-fill"></i></a>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ElectionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ElectionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ElectionId">Delete</a>
+                <div class="btn btn-outline-primary">
+                     <a asp-action="Create" asp-controller="Position" asp-route-id="@item.Id">Add Position</a>
+                </div>
             </td>
         </tr>
 }
