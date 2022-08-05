@@ -13,6 +13,9 @@ namespace OnlineVoting.Controllers
         {
             _service = service;
         }
+
+
+
         public async Task<IActionResult> Index()
         {
             var elections = await _service.GetAllAsync();
@@ -34,15 +37,15 @@ namespace OnlineVoting.Controllers
             await _service.AddAsync(elections);
             return RedirectToAction("Index");
         }
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var elections = _service.GetByIdAsync(id);
-            if (elections == null) return View("Empty");
-            return View(elections);
+            var election = await _service.GetByIdAsync(id);
+            if (election == null) return View("NotFound");
+            return View(election);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id,Election elections)
+        public async Task<IActionResult> Update(int id, Election elections)
         {
             if (ModelState.IsValid)
             {
@@ -53,14 +56,21 @@ namespace OnlineVoting.Controllers
         }
         public async Task< IActionResult> Remove(int id)
         {
-            var result = await _service.GetByIdAsync(id);
-            return View(result);
+            var election = await _service.GetByIdAsync(id);
+            if (election == null) return View("NotFound");
+            return View(election);
         }
-        public IActionResult Details(int id)
+        [HttpPost,ActionName("Remove")]
+        public async Task<IActionResult> RemoveConfirmed(int id)
         {
-            var elections = _service.GetByIdAsync(id);
-            if (elections == null) return View("Empty");
-            return View(elections);
+            await _service.RemoveAsync(id);
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            var election = await _service.GetByIdAsync(id);
+            if (election == null) return View("NotFound");
+            return View(election);
         }
 
      

@@ -13,9 +13,9 @@ namespace OnlineVoting.Controllers
         {
             _service = service;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            var candidates=await _service.GetAllAsync();
+            var candidates=await _service.GetCandidatesAsync(id);
             return View(candidates);
         }
         [HttpGet]

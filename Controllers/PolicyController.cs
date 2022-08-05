@@ -1,20 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineVoting.Data;
+using OnlineVoting.Data.Services;
+using OnlineVoting.Models;
 
 namespace OnlineVoting.Controllers
 {
     public class PolicyController : Controller
     {
-        private readonly AppDbContext _context;
-        public PolicyController(AppDbContext context)
+        private readonly IPolicyService _service;
+        public PolicyController(IPolicyService service)
         {
-            _context = context;
+            _service = service;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Create()
         {
-            var policies = await _context.Policies.ToListAsync();
-            return View(policies);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Policy policies)
+        {
+            if (ModelState.IsValid)
+            {
+                return View(policies);
+            }
+            await _service.AddAsync(policies);
+            return RedirectToAction("Index");
         }
     }
 }
