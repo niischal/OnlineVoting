@@ -19,29 +19,66 @@ namespace OnlineVoting.Controllers
             return View(candidates);
         }
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
+            ViewBag.Id = id;    
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("CandidateIcon,CandidateName")]Candidate candidate)
+        public async Task<IActionResult> Create([Bind("CandidateIcon,CandidateName,CandidateId")]Candidate candidate)
         {
             if (ModelState.IsValid)
             {
                 return View(candidate);
             }
             await _service.AddAsync(candidate);
-            return RedirectToAction("Index");
+            return Redirect("../Index/"+candidate.PositionId);
         }
 
-        public  IActionResult Details(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var candidate =  _service.GetByIdAsync(id);
-            if (candidate == null) return View("Empty");
+            var candidate = await _service.GetByIdAsync(id);
+            if (candidate == null) return View("NotFound");
             return View(candidate);
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, [Bind("CandidateIcon,CandidateName,PositionId")] Candidate candidate)
+        {
+
+            if (ModelState.IsValid)
+            {
+                return View(candidate);
+            }
+
+            ViewBag.EId = candidate.PositionId;
+            await _service.UpdateCandidate(id, candidate);
+
+            return Redirect("../Index/" + id);
+        }
+        public async Task<IActionResult> Remove(int id)
+        {
+            var Candidate = await _service.GetByIdAsync(id);
+            if (Candidate == null) return View("NotFound");
+            return View(Candidate);
+        }
+        [HttpPost, ActionName("Remove")]
+        public async Task<IActionResult> RemoveConfirmed(int id)
+        {
+            var candidate = await _service.GetByIdAsync(id);
+            await _service.RemoveAsync(id);
+
+            return Redirect("../Index/" + candidate.PositionId);
+            //return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            var candidate = await _service.GetByIdAsync(id);
+            if (candidate == null) return View("NotFound");
+            return View(candidate);
+        }
+
+
     }
 }

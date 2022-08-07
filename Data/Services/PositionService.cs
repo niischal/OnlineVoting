@@ -30,5 +30,15 @@ namespace OnlineVoting.Data.Services
             
             return results;
         }
+        public async Task<Position> UpdatePosition(int id, Position position)
+        {
+            Position p = await _context.Positions.FindAsync(id);
+            p.PositionTitle = position.PositionTitle;
+            p.Description = position.Description;
+            _context.Attach(p);
+            _context.Entry(p).State = EntityState.Modified;
+            _context.SaveChanges();
+            return p;
+        }
     }
 }

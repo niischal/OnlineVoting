@@ -30,7 +30,7 @@ namespace OnlineVoting.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Election elections)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(elections);
             }

@@ -7,7 +7,10 @@ namespace OnlineVoting.Data.Services
     {
         Task<IEnumerable<Position>> GetPositionAsync(int eId);
         string GetName(int eId);
-        //Task AddPosAsync(Position p);
+
+
+        Task<Position> UpdatePosition(int eId, Position position);
 
     }
+    
 }
