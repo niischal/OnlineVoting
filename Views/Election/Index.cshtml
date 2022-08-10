@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.ElectionState)
             </th>
             <th>
-                Management
+                Actions
             </th>
             <th>
                 View
@@ -82,6 +82,12 @@
                         {
                             <a asp-action="Create" asp-controller="Policy" asp-route-id="@item.Id">Add Policy</a>
                         }
+                </div>
+            </td>
+            <td>
+                <div class="btn btn-outline-primary">
+                            <a asp-action="Index" asp-controller="VotingBooth" asp-route-id="@item.Id">Voting Booth</a>
+                              <a asp-action="Result" asp-controller="VotingBooth" asp-route-id="@item.Id">Result</a>
                 </div>
             </td>
         </tr>

@@ -39,9 +39,10 @@ namespace OnlineVoting.Models
 
 
         //Relationships
-        public List <Voter> Voters { get; set; }
-        public List <Policy> Policies { get; set; }
-        public List <Position> Positions { get; set; }
+        public virtual List<Voter> Voters { get; set; }
+
+        public virtual List<Policy> Policies { get; set; }
+        public virtual List<Position> Positions { get; set; }
 
 
     }

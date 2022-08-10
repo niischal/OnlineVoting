@@ -18,7 +18,7 @@ namespace OnlineVoting.Models
         public string? Description { get; set; }
 
         //Relationship
-        public List<Candidate> Candidates { get; set; }
+        public virtual List<Candidate> Candidates { get; set; }
 
         //Election
         public int ElectionId { get; set; }

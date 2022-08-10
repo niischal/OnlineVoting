@@ -1,0 +1,51 @@
+﻿@model OnlineVoting.Models.Position
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.Election.ElectionName</h1>
+
+<div>
+    @foreach(Position item in ViewBag.Positions)
+    {
+        <div>
+            <h4>@item.PositionTitle</h4>
+            <div class="row">
+                @foreach (var c in item.Candidates)
+                {
+                    <div class="col-md-4 col-xs-6 border-primary mb-3">
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-12">
+                                    <div class="card-header text-white bg-info">
+                                        <p class="card-text">
+                                            <h5 class="card-title">
+                                                @c.CandidateName
+                                            </h5>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <img width="100%" src="@c.CandidateIcon" alt="@c.CandidateName" >
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card-footer ">
+                                        <p class="card-text">
+                                            <a class="btn btn-success text-white"><i class="check"></i> Vote</a>
+                                            <a class="btn btn-outline-primary float-right" asp-action="Details" asp-controller="Candidates" asp-route-id="@c.Id">
+                                                <i class="bi bi-eye-fill"></i> Show Details
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+     }
+</div>
+

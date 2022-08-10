@@ -32,6 +32,7 @@ namespace OnlineVoting.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create([Bind("PositionTitle,Description,ElectionId")] Position position)
+        
         {
             if (ModelState.IsValid)
             { 

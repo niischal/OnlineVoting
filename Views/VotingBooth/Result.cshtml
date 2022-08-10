@@ -1,0 +1,46 @@
+﻿@model OnlineVoting.Models.Candidate
+
+@{
+    ViewData["Title"] = "Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+  @if(DateTime.Now >= ViewBag.Election.StartDate && DateTime.Now <= ViewBag.Election.EndDate)
+    {
+        <h2>Election is Running Currently Plese vivsit this site after the Election Ends</h2>
+    } 
+    else if(DateTime.Now <= ViewBag.Election.StartDate)
+    {
+        <h2>Election has not started. No result to Show.</h2>
+    }
+    else
+    {
+        <h1>Result for @ViewBag.Election.ElectionName</h1>  
+        @foreach(Position item in ViewBag.Positions)
+        {
+        <div>
+            <h4>@item.PositionTitle</h4>
+            <table class="table">
+                <thead>
+                       <tr>
+                           <th>@Html.DisplayNameFor(n=> n.CandidateName)</th>
+                           <th>@Html.DisplayNameFor(n=> n.CandidateVoteCount)</th>
+                       </tr>
+                </thead>
+            
+                @foreach (var c in item.Candidates)
+                { 
+                    <tbody>
+                        <tr>
+                            <td>@c.CandidateName</td>
+                            <td>@c.CandidateVoteCount</td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table> 
+        </div>
+        }
+    }
