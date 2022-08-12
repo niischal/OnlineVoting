@@ -1,51 +1,114 @@
-﻿@model OnlineVoting.Models.Position
+﻿@model VotedCandidate
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 0;
 }
-
-<h1>@ViewBag.Election.ElectionName</h1>
-
-<div>
-    @foreach(Position item in ViewBag.Positions)
+ @if(DateTime.Now >= ViewBag.Election.StartDate && DateTime.Now <= ViewBag.Election.EndDate)
     {
-        <div>
-            <h4>@item.PositionTitle</h4>
-            <div class="row">
-                @foreach (var c in item.Candidates)
-                {
-                    <div class="col-md-4 col-xs-6 border-primary mb-3">
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-12">
-                                    <div class="card-header text-white bg-info">
-                                        <p class="card-text">
-                                            <h5 class="card-title">
-                                                @c.CandidateName
-                                            </h5>
-                                        </p>
-                                    </div>
+       <h1>@ViewBag.Election.ElectionName</h1>
+
+            <div>
+                <form asp-action="AddVote">
+                    @foreach(Position item in ViewBag.Positions)
+                    {
+            
+                        <div>
+                            <h4>@item.PositionTitle</h4>
+                                <div class="row">
+                                    @foreach (var c in item.Candidates)
+                                    {
+                                        <div class="col-md-4 col-xs-6 border-primary mb-3">
+                                            <div class="card mb-3" style="max-width: 540px;">
+                                                <div class="row g-0">
+                                                    <div class="col-md-12">
+                                                        <div class="card-header text-white bg-info">
+                                                            <p class="card-text">
+                                                                <h5 class="card-title">
+                                                                    @c.CandidateName
+                                                                </h5>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <img width="100%" src="@c.CandidateIcon" alt="@c.CandidateName" >
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="card-footer ">
+                                                            <p class="card-text">
+                                                                <div class="btn btn-success text-white">
+                                                                    <input type="radio" class="@item.PositionTitle" value="@c.Id" asp-for="@Model.VotedCandidates[i]"/>
+                                                                    Vote
+                                                                </div>
+                                                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-controller="Candidates" asp-route-id="@c.Id">
+                                                                    <i class="bi bi-eye-fill"></i> Show Details
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
-                                <div class="col-md-12">
-                                    <img width="100%" src="@c.CandidateIcon" alt="@c.CandidateName" >
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="card-footer ">
-                                        <p class="card-text">
-                                            <a class="btn btn-success text-white"><i class="check"></i> Vote</a>
-                                            <a class="btn btn-outline-primary float-right" asp-action="Details" asp-controller="Candidates" asp-route-id="@c.Id">
-                                                <i class="bi bi-eye-fill"></i> Show Details
-                                            </a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                                @{i++;}
                         </div>
-                    </div>
-                }
+                     }
+                 <input type="submit" value="Sumbit" class="btn btn-primary">
+                 </form>
             </div>
-        </div>
-     }
-</div>
+    } 
+    else if(DateTime.Now <= ViewBag.Election.StartDate)
+    {
+        <h1>@ViewBag.Election.ElectionName Candidates</h1>
+
+            <div>
+                    @foreach(Position item in ViewBag.Positions)
+                    {
+            
+                        <div>
+                            <h4>@item.PositionTitle</h4>
+                                <div class="row">
+                                    @foreach (var c in item.Candidates)
+                                    {
+                                        <div class="col-md-4 col-xs-6 border-primary mb-3">
+                                            <div class="card mb-3" style="max-width: 540px;">
+                                                <div class="row g-0">
+                                                    <div class="col-md-12">
+                                                        <div class="card-header text-white bg-info">
+                                                            <p class="card-text">
+                                                                <h5 class="card-title">
+                                                                    @c.CandidateName
+                                                                </h5>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <img width="100%" src="@c.CandidateIcon" alt="@c.CandidateName" >
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="card-footer ">
+                                                            <p class="card-text">
+                                                                <a class="btn btn-outline-primary" asp-action="Details" asp-controller="Candidates" asp-route-id="@c.Id">
+                                                                    <i class="bi bi-eye-fill"></i> Show Details
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                        </div>
+                     }
+            </div>
+    }
+    else
+    {
+        <h2>Election Has Ended. To View Result Please</h2>
+         <a class="btn btn-outline-primary" asp-action="Result" asp-controller="VotingBooth" asp-route-id="@ViewBag.Election.Id">Click Here</a>
+    }
+
 

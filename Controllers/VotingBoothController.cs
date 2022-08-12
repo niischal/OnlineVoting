@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnlineVoting.Data;
 using OnlineVoting.Models;
 
@@ -41,6 +42,23 @@ namespace OnlineVoting.Controllers
             });
             ViewBag.Positions = positions;
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddVote(VotedCandidate vc)
+        {
+
+
+            foreach (var item in vc.VotedCandidates)
+            {
+                Candidate c = _context.Candidates.Find(item);
+                c.CandidateVoteCount++;
+                _context.Attach(c);
+                _context.Entry(c).State = EntityState.Modified;
+                _context.SaveChanges();
+
+            }
+            return RedirectToAction("Index","Election");
         }
     }
 }
