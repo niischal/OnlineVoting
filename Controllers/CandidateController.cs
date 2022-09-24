@@ -15,8 +15,9 @@ namespace OnlineVoting.Controllers
         }
         public async Task<IActionResult> Index(int id)
         {
-            var candidates=await _service.GetCandidatesAsync(id);
-            return View(candidates);
+            var candidate=await _service.GetCandidatesAsync(id);
+            ViewBag.PId = id;
+            return View(candidate);
         }
         [HttpGet]
         public IActionResult Create(int id)
@@ -26,7 +27,7 @@ namespace OnlineVoting.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("CandidateIcon,CandidateName,CandidateId")]Candidate candidate)
+        public async Task<IActionResult> Create([Bind("CandidateIcon,CandidateName,PositionId")]Candidate candidate)
         {
             if (ModelState.IsValid)
             {

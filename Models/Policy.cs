@@ -19,6 +19,7 @@ namespace OnlineVoting.Models
         [Column(TypeName = "varchar(200)")]
         public string? PolicyDescription { get; set; }
         public int PolicyYesVote { get; set; }
+        public int PolicyNoVote { get; set; }
 
 
         //Relationships

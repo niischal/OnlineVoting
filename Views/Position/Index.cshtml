@@ -7,9 +7,7 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -58,3 +56,8 @@
 }
     </tbody>
 </table>
+
+
+<div class="text-white" style="position:fixed; right:25px;bottom:25px;">
+    <a asp-controller="Position" asp-action="Create" class="btn btn-success" asp-route-id="@ViewBag.EId"> <i class="bi bi-plus-circle" ></i>  Add New</a>
+</div>

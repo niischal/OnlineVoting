@@ -18,6 +18,7 @@ namespace OnlineVoting.Controllers
         public async Task<IActionResult> Index(int Id)
         {
             var positions = await _service.GetPositionAsync(Id);
+            ViewBag.EId = Id;
             return View(positions);
         }
 
@@ -50,7 +51,7 @@ namespace OnlineVoting.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id, [Bind("PositionTitle,Description,ElectionId")] Position position)
+        public async Task<IActionResult> Update(int id, [Bind("PositionTitle,Description.")] Position position)
         {
 
             if (ModelState.IsValid)
