@@ -60,5 +60,55 @@ namespace OnlineVoting.Controllers
             }
             return RedirectToAction("Index","Election");
         }
+
+
+        public IActionResult PolicyIndex(int Id)
+        {
+            Election election = _context.Elections.Find(Id);
+
+            List<Policy> policies = new List<Policy>();
+            policies = _context.Policies.Where(p => p.ElectionId == Id).ToList();
+            //policies.ForEach(position =>
+            //{
+            //    position.Candidates = _context.Candidates.Where(p => p.PositionId == position.Id).ToList();
+
+            //});
+
+            ViewBag.Election = election;
+            ViewBag.Policies = policies;
+            return View();
+        }
+
+        public IActionResult PolicyResult(int Id)
+        {
+            Election election = _context.Elections.Find(Id);
+            ViewBag.Election = election;
+
+            List<Policy> policies = new List<Policy>();
+            policies = _context.Policies.Where(p => p.ElectionId == Id).ToList();
+            return View(policies);
+        }
+
+        [HttpPost]
+        public IActionResult PolicyAddVote(List<PolicyVote> policyVotes)
+        {
+            foreach (var policyVote in policyVotes)
+            {
+                Policy p = _context.Policies.Find(policyVote.Id);
+               
+                if (policyVote.Vote == "Yes")
+                {
+                    p.PolicyYesVote++;
+                }
+                else
+                {
+                    p.PolicyNoVote++;
+                }
+                _context.Attach(p);
+                _context.Entry(p).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index", "Election");
+        }
     }
 }

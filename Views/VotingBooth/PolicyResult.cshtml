@@ -1,0 +1,73 @@
+﻿@model IEnumerable<OnlineVoting.Models.Policy>
+
+@{
+    ViewData["Title"] = "PolicyResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>PolicyResult</h1>
+@if (DateTime.Now >= ViewBag.Election.StartDate && DateTime.Now <= ViewBag.Election.EndDate)
+{
+    <h2>Election is Running Currently Plese vsit this site after the Election Ends</h2>
+}
+else if (DateTime.Now <= ViewBag.Election.StartDate)
+{
+    <h2>Election has not started. No result to Show.</h2>
+}
+else
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PolicyTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PolicyDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PolicyYesVote)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PolicyNoVote)
+                </th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyYesVote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyNoVote)
+                </td>
+                <td>
+                        @if (item.PolicyNoVote < item.PolicyYesVote)
+                        {
+                            <span><b>Passed</b></span>
+                        }
+                        else if (item.PolicyNoVote > item.PolicyYesVote)
+                        {
+                            <span><b>Rejected</b></span>
+                        }
+                        else
+                        {
+                            <span><b>Draw</b></span>
+                        }
+                    </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    }
