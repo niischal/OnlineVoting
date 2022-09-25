@@ -1,4 +1,6 @@
-﻿using OnlineVoting.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using OnlineVoting.Data.Static;
+using OnlineVoting.Models;
 
 namespace OnlineVoting.Data
 {
@@ -231,6 +233,62 @@ namespace OnlineVoting.Data
                         },
                     });
                     context.SaveChanges();
+                }
+            }
+        }
+
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+
+                //Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                }
+                if (!await roleManager.RoleExistsAsync(UserRoles.Voter))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Voter));
+                }
+
+
+                //Users
+                //Admin
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                string AdminEmail = "admin@dotmat.com";
+                var adminUser = await userManager.FindByEmailAsync(AdminEmail);
+                if (adminUser == null)
+                {
+                    var newAdminUser = new ApplicationUser()
+                    {
+                        FirstName = "Admin",
+                        LastName = "Admin",
+                        UserName = "admin",
+                        Email = AdminEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newAdminUser,"Dotm@t123");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
+
+
+                //Voter
+                string VoterEmail = "TestVoter@dotmat.com";
+                var voter = await userManager.FindByEmailAsync(VoterEmail);
+                if (voter== null)
+                {
+                    var newVoter = new ApplicationUser()
+                    {
+                        FirstName = "Test",
+                        LastName = "Voter",
+                        UserName = "testVoter",
+                        Email = VoterEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newVoter, "Dotm@t123");
+                    await userManager.AddToRoleAsync(newVoter, UserRoles.Voter);
                 }
             }
         }
