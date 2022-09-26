@@ -1,13 +1,16 @@
 ﻿
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineVoting.Data;
 using OnlineVoting.Data.Services;
+using OnlineVoting.Data.Static;
 using OnlineVoting.Models;
 
 namespace OnlineVoting.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class PolicyController : Controller
     {
         private readonly IPolicyService _service;

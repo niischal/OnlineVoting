@@ -7,20 +7,18 @@
 }
 
 <div class="row">
-	<div class="col">
+	<div class="col float-left">
 		<div>
-			<h1 class="text-success">Welcome To Online Voting App</h1>
+			<h1 class="text-success">Welcome To Online Voting</h1>
 		</div>
-		<span style="padding:5px;"></span>
 		
 		<div class="row">
 			<div class="col">
 
 			</div>
 			<div class="col-auto">
-				<div>
 					<a class="btn btn-outline-success mx-auto" style="width: 200px;" asp-controller="Account" asp-action="AdminRegister">Register for Election Admin</a>
-				</div>
+				
 			</div>
 			<div class="col">
 
@@ -28,18 +26,18 @@
 		</div>
 		
 	</div>
-	<div class="col-md-6 offset-3">
+	<div class="col">
 		<p>
 			<h4>Register for new account</h4>
 		</p>
 		@if(TempData["Error"] != null)
 		{
 			<div class="col-md-12 alert alert-danger">
-				<span><b>Sorry!</b>- @TempData["Error"]</span>
+				<span><b>Sorry!</b> @TempData["Error"]</span>
 			</div>
 		}
 		<div class="row">
-			<div class="col-md-8 align-content-center">
+			<div class="col-auto align-content-center">
 				<form asp-action="Register">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="row">

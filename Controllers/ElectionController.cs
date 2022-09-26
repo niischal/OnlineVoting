@@ -4,6 +4,8 @@ using OnlineVoting.Data;
 using OnlineVoting.Data.Services;
 using OnlineVoting.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using OnlineVoting.Data.Static;
 
 namespace OnlineVoting.Controllers
 {
@@ -26,12 +28,15 @@ namespace OnlineVoting.Controllers
             List<Election>? elections = _service.GetElectionsByElectionId(UserElections);
             return View(elections);
         }
+
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         public async Task<IActionResult> Create(Election election)
         {
@@ -44,6 +49,8 @@ namespace OnlineVoting.Controllers
             await _service.AddUserElection(election.Id,id);
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Update(int id)
         {
             var election = await _service.GetByIdAsync(id);
@@ -51,6 +58,7 @@ namespace OnlineVoting.Controllers
             return View(election);
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         public async Task<IActionResult> Update(int id, Election elections)
         {
@@ -61,18 +69,24 @@ namespace OnlineVoting.Controllers
             await _service.UpdateAsync(id,elections);
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task< IActionResult> Remove(int id)
         {
             var election = await _service.GetByIdAsync(id);
             if (election == null) return View("NotFound");
             return View(election);
         }
+
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost,ActionName("Remove")]
         public async Task<IActionResult> RemoveConfirmed(int id)
         {
             await _service.RemoveAsync(id);
             return RedirectToAction("Index");
         }
+
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var election = await _service.GetByIdAsync(id);

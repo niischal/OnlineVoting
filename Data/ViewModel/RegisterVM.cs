@@ -29,7 +29,7 @@ namespace OnlineVoting.Data.ViewModel
 
         [Required]
         [Display(Name = "Confirm Password")]
-        [DataType(DataType.Password)]
+        [DataType(DataType.Password, ErrorMessage = "Not Valid Password")]
         [Compare("Password", ErrorMessage ="Password Mismatch")]
         public string ConfirmPassword { get; set; }
 

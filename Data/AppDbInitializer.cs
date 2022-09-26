@@ -38,7 +38,7 @@ namespace OnlineVoting.Data
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(3),
                             Decription = "Vote for Your Policy",
-                            ElectionType = ElectionType.CandidateChoosing,
+                            ElectionType = ElectionType.PolicyMaking,
                             ElectionState = ElectionState.NotStarted
                         },
                         new Election()

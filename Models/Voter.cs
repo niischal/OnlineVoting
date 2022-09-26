@@ -15,6 +15,8 @@ namespace OnlineVoting.Models
         [Display(Name = "First Name")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "First Name must be between 3 and 50 chars")]
         public string Firstname { get; set; }
+
+
         [Column(TypeName = "varchar(100)")]
         [Required(ErrorMessage = "Last Name is Required")]
         [Display(Name = "Last Name")]
@@ -22,7 +24,7 @@ namespace OnlineVoting.Models
         public string LastName { get; set; }
 
         [Display(Name = "Valid")]
-        public bool IsValid { get; set; }
+        public bool IsVarified { get; set; }
 
 
         [Column(TypeName = "varchar(100)")]
@@ -34,8 +36,8 @@ namespace OnlineVoting.Models
         //Relationships
 
         //Election
-        public int ElectionId { get; set; }
+        public int? ElectionId { get; set; }
         [ForeignKey("ElectionId")]
-        public Election Election { get; set; }
+        public Election? Election { get; set; }
     }  
 }

@@ -24,7 +24,6 @@ builder.Services.AddSession();
 builder.Services.AddAuthentication(options =>{
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
-
 var app = builder.Build();
 
 
@@ -48,6 +47,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 //Seed Database
 AppDbInitializer.Seed(app);

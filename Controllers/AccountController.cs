@@ -61,7 +61,10 @@ namespace OnlineVoting.Controllers
         public IActionResult Register()
         {
             var response = new RegisterVM();
-
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Election");
+            }
             return View(response);
         }
         public IActionResult AdminRegister()
@@ -101,17 +104,26 @@ namespace OnlineVoting.Controllers
             var user = await _userManager.FindByEmailAsync(accountDetails.EmailAddress);
             if (user != null)
             {
-                TempData["Error"] = "You already have an account";
+                TempData["Error"] = "- You already have an account";
                 return View(accountDetails);
             }
 
             var user2 = await _userManager.FindByNameAsync(accountDetails.UserName);
             if (user2 != null)
             {
-                TempData["Error"] = "Username Taken";
+                TempData["Error"] = "- Username Taken";
                 return View(accountDetails);
             }
-            await _services.Register(accountDetails);
+            var response= await _services.Register(accountDetails);
+            TempData["Error"] = "";
+            if (!response.Succeeded)
+            {
+                foreach (var error in response.Errors)
+                {
+                    TempData["Error"] = TempData["Error"] + "\n" + "-" +  error.Description;
+                }
+                return View(accountDetails);
+            }
             bool var=await _services.AutoLogin(accountDetails);
 
             return RedirectToAction("Index", "Election");

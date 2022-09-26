@@ -15,7 +15,7 @@ namespace OnlineVoting.Data.Services
             _signInManager = signInManager;
             _context = context;
         }
-        public async Task Register (RegisterVM accountDetails)
+        public async Task<IdentityResult> Register (RegisterVM accountDetails)
         {
             var newUser = new ApplicationUser()
             {
@@ -31,6 +31,7 @@ namespace OnlineVoting.Data.Services
             {
                 await _userManager.AddToRoleAsync(newUser, accountDetails.Role);
             }
+            return newUserResponse;
         }
 
         public async Task<bool> AutoLogin (RegisterVM accountDetails)
