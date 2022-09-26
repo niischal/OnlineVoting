@@ -10,5 +10,7 @@ namespace OnlineVoting.Models
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        public IList<UserElection> UserElections { get; set; }
     }
 }

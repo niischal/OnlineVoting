@@ -14,7 +14,7 @@ namespace OnlineVoting.Controllers
         }
         public IActionResult Index(int Id)
         {
-            Election election = _context.Elections.Find(Id);
+            Election? election = _context.Elections.Find(Id);
             ViewBag.Election=election;
 
             List<Position> positions = new List<Position>();
@@ -30,7 +30,7 @@ namespace OnlineVoting.Controllers
 
         public IActionResult Result(int Id)
         {
-            Election election = _context.Elections.Find(Id);
+            Election? election = _context.Elections.Find(Id);
             ViewBag.Election = election;
 
             List<Position> positions = new List<Position>();
@@ -51,7 +51,7 @@ namespace OnlineVoting.Controllers
 
             foreach (var item in vc.VotedCandidates)
             {
-                Candidate c = _context.Candidates.Find(item);
+                Candidate? c = _context.Candidates.Find(item);
                 c.CandidateVoteCount++;
                 _context.Attach(c);
                 _context.Entry(c).State = EntityState.Modified;
@@ -64,7 +64,7 @@ namespace OnlineVoting.Controllers
 
         public IActionResult PolicyIndex(int Id)
         {
-            Election election = _context.Elections.Find(Id);
+            Election? election = _context.Elections.Find(Id);
 
             List<Policy> policies = new List<Policy>();
             policies = _context.Policies.Where(p => p.ElectionId == Id).ToList();
@@ -81,7 +81,7 @@ namespace OnlineVoting.Controllers
 
         public IActionResult PolicyResult(int Id)
         {
-            Election election = _context.Elections.Find(Id);
+            Election? election = _context.Elections.Find(Id);
             ViewBag.Election = election;
 
             List<Policy> policies = new List<Policy>();
@@ -94,7 +94,7 @@ namespace OnlineVoting.Controllers
         {
             foreach (var policyVote in policyVotes)
             {
-                Policy p = _context.Policies.Find(policyVote.Id);
+                Policy? p = _context.Policies.Find(policyVote.Id);
                
                 if (policyVote.Vote == "Yes")
                 {

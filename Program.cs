@@ -14,6 +14,7 @@ builder.Services.AddScoped<ICandidatesService,CandidatesService>();
 builder.Services.AddScoped<IElectionService, ElectionService>();
 builder.Services.AddScoped<IPositionService, PositionService>();
 builder.Services.AddScoped<IPolicyService, PolicyService>();
+builder.Services.AddScoped<IAccountServices, AccountServices>();
 
 
 //Authentication and Authorization
@@ -47,6 +48,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 //Seed Database
 AppDbInitializer.Seed(app);
 AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();

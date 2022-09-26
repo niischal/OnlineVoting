@@ -7,30 +7,10 @@
 }
 
 <div class="row">
-	<div class="col">
-		<div>
-			<h1 class="text-success">Welcome To Online Voting App</h1>
-		</div>
-		<span style="padding:5px;"></span>
-		
-		<div class="row">
-			<div class="col">
-
-			</div>
-			<div class="col-auto">
-				<div>
-					<a class="btn btn-outline-success mx-auto" style="width: 200px;" asp-controller="Account" asp-action="AdminRegister">Register for Election Admin</a>
-				</div>
-			</div>
-			<div class="col">
-
-			</div>
-		</div>
-		
-	</div>
-	<div class="col-md-6 offset-3">
+<div class="col"></div>
+	<div class="col-auto">
 		<p>
-			<h4>Register for new account</h4>
+			<h4>Register for Election Admin</h4>
 		</p>
 		@if(TempData["Error"] != null)
 		{
@@ -39,11 +19,11 @@
 			</div>
 		}
 		<div class="row">
-			<div class="col-md-8 align-content-center">
-				<form asp-action="Register">
+			<div class="col-auto">
+				<form asp-action="AdminRegister">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-auto">
 							<div class="form-group">
 								<label asp-for="FirstName" class="control-label"></label>
 								<input asp-for="FirstName" class="form-control" />
@@ -84,7 +64,7 @@
 							</div>
 						</div>
 					</div>
-					<input hidden asp-for="Role" value="@UserRoles.Voter" />
+					<input hidden asp-for="Role" value="@UserRoles.Admin" />
 					<div class="form-group">
 						<input type="submit" value="Register" class="btn btn-outline-success float-right" />
 						<a class="btn btn-outline-secondary" asp-controller="Election" asp-action="Index">Cancel</a>
@@ -106,5 +86,5 @@
 			</div>
 		</div>
 	</div>
-
+<div class="col"></div>
 </div>

@@ -26,8 +26,10 @@ namespace OnlineVoting.Data.Base
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int id) => await _context.Set<T>().FirstOrDefaultAsync(n => n.Id == id);
-
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(n => n.Id == id);
+        }
         public async Task RemoveAsync(int id)
         {
 

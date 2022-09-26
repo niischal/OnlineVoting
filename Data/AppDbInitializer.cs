@@ -232,8 +232,40 @@ namespace OnlineVoting.Data
                             ElectionId=1
                         },
                     });
-                    context.SaveChanges();
                 }
+                //UserElections
+                if (!context.UserElections.Any())
+                {
+                    context.UserElections.AddRange(new List<UserElection>()
+                    {
+                        new UserElection()
+                        {
+                            UserId = "6c5c3f84-2266-4ef1-8700-b7db68cb8562",
+                            ElectionId = 1
+                        },
+                        new UserElection()
+                        {
+                            UserId = "6c5c3f84-2266-4ef1-8700-b7db68cb8562",
+                            ElectionId = 2
+                        },
+                        new UserElection()
+                        {
+                            UserId = "6c5c3f84-2266-4ef1-8700-b7db68cb8562",
+                            ElectionId = 3
+                        },
+                        new UserElection()
+                        {
+                            UserId = "11fc501e-f4a9-4bcb-97d2-dd2b49bfdbd4",
+                            ElectionId = 1
+                        },
+                        new UserElection()
+                        {
+                            UserId = "11fc501e-f4a9-4bcb-97d2-dd2b49bfdbd4",
+                            ElectionId = 2
+                        }
+                    }) ;
+                }
+                context.SaveChanges();
             }
         }
 

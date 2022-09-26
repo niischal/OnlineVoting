@@ -12,12 +12,15 @@ namespace OnlineVoting.Data.ViewModel
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Username is required")]
+        [Display(Name = "Username")]
+        public string UserName{ get; set; }
 
         [Required(ErrorMessage="Email Address is required")]
         [Display(Name="Email")]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
-
+           
 
         [Required]
         [Display(Name = "Password")]
@@ -29,5 +32,7 @@ namespace OnlineVoting.Data.ViewModel
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage ="Password Mismatch")]
         public string ConfirmPassword { get; set; }
+
+        public string Role { get; set; }
     }
 }

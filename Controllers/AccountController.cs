@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineVoting.Data;
+using OnlineVoting.Data.Services;
 using OnlineVoting.Data.Static;
 using OnlineVoting.Data.ViewModel;
 using OnlineVoting.Models;
@@ -12,11 +13,13 @@ namespace OnlineVoting.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly AppDbContext _context;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context)
+        private readonly IAccountServices _services;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context, IAccountServices services)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _services = services;
         }
         public IActionResult Index()
         {
@@ -61,6 +64,35 @@ namespace OnlineVoting.Controllers
 
             return View(response);
         }
+        public IActionResult AdminRegister()
+        {
+            var response = new RegisterVM();
+
+            return View(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AdminRegister(RegisterVM accountDetails)
+        {
+            if (!ModelState.IsValid) return View(accountDetails);
+            var user = await _userManager.FindByEmailAsync(accountDetails.EmailAddress);
+            if (user != null)
+            {
+                TempData["Error"] = "You already have an account";
+                return View(accountDetails);
+            }
+
+            var user2 = await _userManager.FindByNameAsync(accountDetails.UserName);
+            if (user2 != null)
+            {
+                TempData["Error"] = "Username Taken";
+                return View(accountDetails);
+            }
+            await _services.Register(accountDetails);
+            bool var = await _services.AutoLogin(accountDetails);
+
+            return RedirectToAction("Index", "Election");
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM accountDetails)
@@ -73,28 +105,27 @@ namespace OnlineVoting.Controllers
                 return View(accountDetails);
             }
 
-            var newUser = new ApplicationUser()
+            var user2 = await _userManager.FindByNameAsync(accountDetails.UserName);
+            if (user2 != null)
             {
-                FirstName = accountDetails.FirstName,
-                LastName = accountDetails.LastName,
-                Email = accountDetails.EmailAddress,
-                UserName = accountDetails.EmailAddress
-            };
-
-            var newUserResponse = await _userManager.CreateAsync(newUser, accountDetails.Password);
-
-            if (newUserResponse.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(newUser, UserRoles.Voter);
+                TempData["Error"] = "Username Taken";
+                return View(accountDetails);
             }
+            await _services.Register(accountDetails);
+            bool var=await _services.AutoLogin(accountDetails);
+
             return RedirectToAction("Index", "Election");
         }
+
+      
+
+       
 
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Election");
+            return RedirectToAction("Register", "Account");
 
         }
     }
