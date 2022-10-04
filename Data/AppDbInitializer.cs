@@ -171,101 +171,71 @@ namespace OnlineVoting.Data
                     context.SaveChanges();
                 }
                 //Voter
-                if (!context.Voters.Any())
-                {
-                    context.Voters.AddRange(new List<Voter>()
-                    {
-                        new Voter()
-                        {
-                           // VoterId=1,
-                            Firstname = "Tony",
-                            LastName = "Stark",
-                            UniqueId = "A001",
-                            ElectionId=1
-                        },
-                        new Voter()
-                        {
-                            //VoterId=2,
-                            Firstname = "Steve",
-                            LastName = "Rogers",
-                            UniqueId = "A002",
-                            ElectionId=1
-                        },
-                        new Voter()
-                        {
-                            //VoterId=3,
-                            Firstname = "Peter",
-                            LastName = "Parker",
-                            UniqueId = "A003",
-                            ElectionId=1
-                        },
-                        new Voter()
-                        {
-                            //VoterId=4,
-                            Firstname = "Nick",
-                            LastName = "Fury",
-                            UniqueId = "A000",
-                            ElectionId=2
-                        },
-                        new Voter()
-                        {
-                            //VoterId=5,
-                            Firstname = "Bruce",
-                            LastName = "Banner",
-                            UniqueId = "A004",
-                            ElectionId=2
-                        },
-                        new Voter()
-                        {
-                            //VoterId=6,
-                            Firstname = "Val",
-                            LastName = "Kyrie",
-                            UniqueId = "A019",
-                            ElectionId=1
-                        },
-                        new Voter()
-                        {
-                            //VoterId=7,
-                            Firstname = "Heim",
-                            LastName = "Dall",
-                            UniqueId = "A020",
-                            ElectionId=1
-                        },
-                    });
-                }
+                //if (!context.Voters.Any())
+                //{
+                //    context.Voters.AddRange(new List<Voter>()
+                //    {
+                //        new Voter()
+                //        {
+                //           // VoterId=1,
+                //            Firstname = "Tony",
+                //            LastName = "Stark",
+                //            UniqueId = "A001",
+                //            ElectionId=1
+                //        },
+                //        new Voter()
+                //        {
+                //            //VoterId=2,
+                //            Firstname = "Steve",
+                //            LastName = "Rogers",
+                //            UniqueId = "A002",
+                //            ElectionId=1
+                //        },
+                //        new Voter()
+                //        {
+                //            //VoterId=3,
+                //            Firstname = "Peter",
+                //            LastName = "Parker",
+                //            UniqueId = "A003",
+                //            ElectionId=1
+                //        },
+                //        new Voter()
+                //        {
+                //            //VoterId=4,
+                //            Firstname = "Nick",
+                //            LastName = "Fury",
+                //            UniqueId = "A000",
+                //            ElectionId=2
+                //        },
+                //        new Voter()
+                //        {
+                //            //VoterId=5,
+                //            Firstname = "Bruce",
+                //            LastName = "Banner",
+                //            UniqueId = "A004",
+                //            ElectionId=2
+                //        },
+                //        new Voter()
+                //        {
+                //            //VoterId=6,
+                //            Firstname = "Val",
+                //            LastName = "Kyrie",
+                //            UniqueId = "A019",
+                //            ElectionId=1
+                //        },
+                //        new Voter()
+                //        {
+                //            //VoterId=7,
+                //            Firstname = "Heim",
+                //            LastName = "Dall",
+                //            UniqueId = "A020",
+                //            ElectionId=1
+                //        },
+                //    });
+                //}
                 //UserElections
-                if (!context.UserElections.Any())
-                {
-                    context.UserElections.AddRange(new List<UserElection>()
-                    {
-                        new UserElection()
-                        {
-                            UserId = "6c5c3f84-2266-4ef1-8700-b7db68cb8562",
-                            ElectionId = 1
-                        },
-                        new UserElection()
-                        {
-                            UserId = "6c5c3f84-2266-4ef1-8700-b7db68cb8562",
-                            ElectionId = 2
-                        },
-                        new UserElection()
-                        {
-                            UserId = "6c5c3f84-2266-4ef1-8700-b7db68cb8562",
-                            ElectionId = 3
-                        },
-                        new UserElection()
-                        {
-                            UserId = "11fc501e-f4a9-4bcb-97d2-dd2b49bfdbd4",
-                            ElectionId = 1
-                        },
-                        new UserElection()
-                        {
-                            UserId = "11fc501e-f4a9-4bcb-97d2-dd2b49bfdbd4",
-                            ElectionId = 2
-                        }
-                    }) ;
-                }
-                context.SaveChanges();
+                
+
             }
         }
 
@@ -324,5 +294,50 @@ namespace OnlineVoting.Data
                 }
             }
         }
+        public static void SeedUserElection(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
+
+                context.Database.EnsureCreated();
+                if (!context.UserElections.Any())
+                {
+                    var admin = "f5629a6e-867d-4983-96f2-dabf9ebe7cc5";
+                    var testVoter = "c4159617-c244-4af5-9a9c-4997deda90c1"; 
+                    context.UserElections.AddRange(new List<UserElection>()
+                    {
+                        new UserElection()
+                        {
+                            UserId = admin,
+                            ElectionId = 1
+                        },
+                        new UserElection()
+                        {
+                            UserId = admin,
+                            ElectionId = 2
+                        },
+                        new UserElection()
+                        {
+                            UserId = admin,
+                            ElectionId = 3
+                        },
+                        new UserElection()
+                        {
+                            UserId = testVoter,
+                            ElectionId = 1
+                        },
+                        new UserElection()
+                        {
+                            UserId = testVoter,
+                            ElectionId = 2
+                        }
+                    });
+                    context.SaveChanges();
+                }
+            }
+        }
     }
 }
+
+        

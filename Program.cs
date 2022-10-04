@@ -53,5 +53,5 @@ app.MapControllerRoute(
 //Seed Database
 AppDbInitializer.Seed(app);
 AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
-
+AppDbInitializer.SeedUserElection(app);
 app.Run();

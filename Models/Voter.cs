@@ -4,34 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineVoting.Models
 {
-    public class Voter : IEntityBase
+    public class Voter
     {
         [Key]
-        public int Id { get; set; }
-
-
-        [Column(TypeName = "varchar(100)")]
-        [Required(ErrorMessage = "First Name is Required")]
-        [Display(Name = "First Name")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "First Name must be between 3 and 50 chars")]
-        public string Firstname { get; set; }
-
-
-        [Column(TypeName = "varchar(100)")]
-        [Required(ErrorMessage = "Last Name is Required")]
-        [Display(Name = "Last Name")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Last Name must be between 3 and 50 chars")]
-        public string LastName { get; set; }
-
-        [Display(Name = "Valid")]
-        public bool IsVarified { get; set; }
-
-
-        [Column(TypeName = "varchar(100)")]
-        [Required(ErrorMessage = "Unique Id is Required")]
-        [Display(Name = "Unique Id")]
+        public int VoterId { get; set; }
         
         public string UniqueId { get; set; }
+
+        public bool canVote { get; set; }
 
         //Relationships
 
@@ -39,5 +19,15 @@ namespace OnlineVoting.Models
         public int? ElectionId { get; set; }
         [ForeignKey("ElectionId")]
         public Election? Election { get; set; }
+
+        //User
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
+
+        //VerificationRequest
+        public int? ReqId { get; set; }
+        [ForeignKey("NotiId")]
+        public VoterRegistration? Noti { get; set; }
     }  
 }

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using OnlineVoting.Data;
-using OnlineVoting.Data.Services;
-using OnlineVoting.Models;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OnlineVoting.Data.Services;
 using OnlineVoting.Data.Static;
+using OnlineVoting.Models;
 
 namespace OnlineVoting.Controllers
 {
@@ -16,7 +14,7 @@ namespace OnlineVoting.Controllers
         public ElectionController(IElectionService service, UserManager<ApplicationUser> UserManager)
         {
             _service = service;
-            _userManager = UserManager; 
+            _userManager = UserManager;
         }
 
 
@@ -46,7 +44,7 @@ namespace OnlineVoting.Controllers
             }
             await _service.AddAsync(election);
             var id = _userManager.GetUserId(User);
-            await _service.AddUserElection(election.Id,id);
+            await _service.AddUserElection(election.Id, id);
             return RedirectToAction("Index");
         }
 
@@ -66,12 +64,12 @@ namespace OnlineVoting.Controllers
             {
                 return View(elections);
             }
-            await _service.UpdateAsync(id,elections);
+            await _service.UpdateAsync(id, elections);
             return RedirectToAction("Index");
         }
 
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task< IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove(int id)
         {
             var election = await _service.GetByIdAsync(id);
             if (election == null) return View("NotFound");
@@ -79,7 +77,7 @@ namespace OnlineVoting.Controllers
         }
 
         [Authorize(Roles = UserRoles.Admin)]
-        [HttpPost,ActionName("Remove")]
+        [HttpPost, ActionName("Remove")]
         public async Task<IActionResult> RemoveConfirmed(int id)
         {
             await _service.RemoveAsync(id);
@@ -94,6 +92,6 @@ namespace OnlineVoting.Controllers
             return View(election);
         }
 
-     
+
     }
 }

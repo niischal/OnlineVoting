@@ -42,7 +42,7 @@ namespace OnlineVoting.Models
         public virtual List<Policy> Policies { get; set; }
         public virtual List<Position> Positions { get; set; }
 
-        public IList<UserElection> UserElections { get; set; }
+        public virtual List<UserElection> UserElections { get; set; }
 
     }
 }

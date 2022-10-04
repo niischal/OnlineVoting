@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OnlineVoting.Models;
+using OnlineVoting.Data.ViewModel;
 
 namespace OnlineVoting.Data
 {
@@ -25,11 +26,14 @@ namespace OnlineVoting.Data
                 .HasForeignKey(sc => sc.ElectionId);
             base.OnModelCreating(modelBuilder);
         }
+       
         public DbSet <Election> Elections { get; set; }
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<Policy> Policies { get; set; }
         public DbSet<Voter> Voters { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<UserElection> UserElections { get; set; }
+        public DbSet<VoterRegistration> VoterRegistrations { get; set; }
+       // public DbSet<VotersToBeVerified> VotersToBeVerified  { get; set; }
     }
 }

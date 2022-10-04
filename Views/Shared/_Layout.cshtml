@@ -34,7 +34,11 @@
                         <li class="nav-item">
                         </li>
                     </ul>
-                    <partial name="_Identity" />
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                        <partial name="_Identity" />
+                    }
+                    
                 </div>
             </div>
         </nav>

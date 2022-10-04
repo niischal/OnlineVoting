@@ -1,7 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using OnlineVoting.Data.Static
 @inject UserManager<ApplicationUser> UserManager;
 
 @if(!User.Identity.IsAuthenticated){
+    
     <a class="btn btn-outline-success my-2 my-sm-0" asp-controller="Account" asp-action="LogIn">
     <i class="bi bi-box-arrow-in-right"> </i> LogIn 
     </a>
@@ -12,6 +14,20 @@
 }
 else
 {
+    if (User.IsInRole(UserRoles.Voter))
+    {
+        <a class="btn btn-outline-success my-2 my-sm-0" asp-controller="Voter" asp-action="VoterRegister">
+        <i class="bi bi-clipboard-check-fill"> </i> Register For Election
+        </a>
+        <span style="padding:0px 5px"></span>
+    }
+    else
+    {
+        <a class="btn btn-outline-success my-2 my-sm-0" asp-controller="Voter" asp-action="VotersToBeVerified">
+        <i class="bi bi-clipboard-check-fill"> </i> Voters To Be Verified
+        </a>
+        <span style="padding:0px 5px"></span>
+    }
     <div class="dropdown">
         <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-badge"></i> Hello, @UserManager.GetUserName(User)

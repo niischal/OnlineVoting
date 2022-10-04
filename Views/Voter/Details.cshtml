@@ -1,0 +1,40 @@
+﻿@model OnlineVoting.Models.VoterRegistration
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var electionName = ViewBag.Election;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>VoterRegistration</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UniqueId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UniqueId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Election)
+        </dt>
+        <dd class = "col-sm-10">
+            @electionName
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Voter)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VoterId)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Accept" asp-route-id="@Model.ReqId"><i class="bi bi-person-check-fill"></i> Accept</a> |
+    <a asp-action="Discard" asp-route-id="@Model.ReqId"><i class="bi bi-person-x-fill"></i> Discard</a> |
+    <a asp-action="Details" asp-route-id="@Model.ReqId"><i class="bi bi-info-circle-fill"></i></a>
+</div>

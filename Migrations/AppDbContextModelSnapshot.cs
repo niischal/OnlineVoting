@@ -365,37 +365,70 @@ namespace OnlineVoting.Migrations
 
             modelBuilder.Entity("OnlineVoting.Models.Voter", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("VoterId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VoterId"), 1L, 1);
+
+                    b.Property<int?>("ElectionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NotiId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ReqId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UniqueId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("canVote")
+                        .HasColumnType("bit");
+
+                    b.HasKey("VoterId");
+
+                    b.HasIndex("ElectionId");
+
+                    b.HasIndex("NotiId")
+                        .IsUnique()
+                        .HasFilter("[NotiId] IS NOT NULL");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Voters");
+                });
+
+            modelBuilder.Entity("OnlineVoting.Models.VoterRegistration", b =>
+                {
+                    b.Property<int>("ReqId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReqId"), 1L, 1);
 
                     b.Property<int>("ElectionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<bool>("IsValid")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
                     b.Property<string>("UniqueId")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("VoterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReqId");
 
                     b.HasIndex("ElectionId");
 
-                    b.ToTable("Voters");
+                    b.HasIndex("VoterId");
+
+                    b.ToTable("VoterRegistrations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -505,16 +538,49 @@ namespace OnlineVoting.Migrations
                 {
                     b.HasOne("OnlineVoting.Models.Election", "Election")
                         .WithMany()
-                        .HasForeignKey("ElectionId")
+                        .HasForeignKey("ElectionId");
+
+                    b.HasOne("OnlineVoting.Models.VoterRegistration", "Noti")
+                        .WithOne()
+                        .HasForeignKey("OnlineVoting.Models.Voter", "NotiId");
+
+                    b.HasOne("OnlineVoting.Models.ApplicationUser", "User")
+                        .WithMany("Voter")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Election");
+
+                    b.Navigation("Noti");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnlineVoting.Models.VoterRegistration", b =>
+                {
+                    b.HasOne("OnlineVoting.Models.Election", "Election")
+                        .WithMany()
+                        .HasForeignKey("ElectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OnlineVoting.Models.Voter", "Voter")
+                        .WithMany()
+                        .HasForeignKey("VoterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Election");
+
+                    b.Navigation("Voter");
                 });
 
             modelBuilder.Entity("OnlineVoting.Models.ApplicationUser", b =>
                 {
                     b.Navigation("UserElections");
+
+                    b.Navigation("Voter");
                 });
 
             modelBuilder.Entity("OnlineVoting.Models.Election", b =>
