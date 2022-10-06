@@ -4,12 +4,14 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
+    bool canVote = ViewBag.canVote;
 }
  @if(DateTime.Now >= ViewBag.Election.StartDate && DateTime.Now <= ViewBag.Election.EndDate)
     {
-       <h1>@ViewBag.Election.ElectionName</h1>
-
-            <div>
+        <h1>@ViewBag.Election.ElectionName</h1>
+        @if (canVote)
+        {
+        <div>
                 <form asp-action="AddVote">
                     @foreach(Position item in ViewBag.Positions)
                     {
@@ -57,8 +59,13 @@
                      }
                  <input type="submit" value="Sumbit" class="btn btn-primary">
                  </form>
-            </div>
-    } 
+        </div>
+    }
+    else
+    {
+        <h4>Already Voted</h4>
+    }
+} 
     else if(DateTime.Now <= ViewBag.Election.StartDate)
     {
         <h1>@ViewBag.Election.ElectionName Candidates</h1>

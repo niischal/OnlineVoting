@@ -4,7 +4,6 @@
 @{
     ViewData["Title"] = "VotersToBeVerified";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
 }
 
 <h1>VotersToBeVerified</h1>
@@ -22,6 +21,7 @@
                 @Html.DisplayNameFor(model => model.Election.ElectionName)
             </th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -37,10 +37,19 @@
                 @Html.DisplayFor(modelItem => item.ElectionId)
             </td>
             <td>
-                <form asp-action="Accept"><input type="submit" asp-action="Accept" asp-route-id="@item.ReqId"/><i class="bi bi-person-check-fill"></i></form>
-                 |
-                <a asp-action="Discard" asp-route-id="@item.ReqId"><i class="bi bi-person-x-fill"></i></a> |
                 <a asp-action="Details" asp-route-id="@item.ReqId"><i class="bi bi-info-circle-fill"></i></a>
+            </td>
+            <td class = "row">
+                <div class = "col-auto">
+                    <form asp-action= "Accept">
+                        <input type="submit" asp-action="Accept" asp-route-id="@item.ReqId" value="Accept" class="btn btn-primary"/>
+                    </form>
+                </div>
+                <div class = "col-auto">
+                    <form asp-action="Discard">
+                        <input type="submit" asp-action="Discard" asp-route-id="@item.ReqId" value="Discard" class="btn btn-primary"/>
+                    </form>
+                </div>
             </td>
         </tr>
 }

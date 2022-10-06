@@ -40,23 +40,27 @@ namespace OnlineVoting.Controllers
                 vr.UserId = _userManager.GetUserId(User);
                 _context.Voters.Add(vr);
                 _context.SaveChanges();
-                AddToVoterRegistration(vr);
+                var voterReg=AddToVoterRegistration(vr);
+                vr.ReqId = voterReg.ReqId;
+                _context.Voters.Update(vr);
+                _context.SaveChanges();
             }
 
             return RedirectToAction("Success");
         }
-        private void AddToVoterRegistration(Voter voter)
+        private VoterRegistration AddToVoterRegistration(Voter voter)
         {
             var voterRequests = _context.VoterRegistrations.Where(x => x.UniqueId == voter.UniqueId && x.ElectionId == voter.ElectionId).ToList();
+            VoterRegistration vr = new VoterRegistration();
             if (voterRequests.Count == 0)
             {
-                VoterRegistration vr = new VoterRegistration();
                 vr.ElectionId = (int)voter.ElectionId;
                 vr.VoterId = voter.VoterId;
                 vr.UniqueId = voter.UniqueId;
                 _context.VoterRegistrations.Add(vr);
                 _context.SaveChanges();
             }
+            return vr;
         }
         public IActionResult Success()
         {
@@ -81,10 +85,11 @@ namespace OnlineVoting.Controllers
         [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Accept(int id)
         {
-            var VoterDetails = _context.VoterRegistrations.Where(x => x.ReqId == id).FirstOrDefault();
-            var voter = _context.Users.Where(x=>x.Id == VoterDetails.Voter.UserId).FirstOrDefault();
-            await _electionService.AddUserElection(VoterDetails.ElectionId, voter.Id);
-            _context.VoterRegistrations.Remove(VoterDetails);
+            var voterDetails = _context.VoterRegistrations.Where(x => x.ReqId == id).FirstOrDefault();
+            var voter = _context.Voters.Where(x => x.ReqId == id).FirstOrDefault();
+            var user = _context.Users.Where(x=> x.Id == voter.UserId).FirstOrDefault();
+            await _electionService.AddUserElection(voterDetails.ElectionId, user.Id);
+            _context.VoterRegistrations.Remove(voterDetails);
             _context.SaveChanges();
             return RedirectToAction("VotersToBeVerified");
         }
