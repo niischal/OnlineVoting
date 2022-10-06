@@ -9,7 +9,7 @@
  @if(DateTime.Now >= ViewBag.Election.StartDate && DateTime.Now <= ViewBag.Election.EndDate)
     {
         <h1>@ViewBag.Election.ElectionName</h1>
-        @if (canVote)
+    @if (canVote)
         {
         <div>
                 <form asp-action="AddVote">
@@ -66,7 +66,7 @@
         <h4>Already Voted</h4>
     }
 } 
-    else if(DateTime.Now <= ViewBag.Election.StartDate)
+else if(DateTime.Now <= ViewBag.Election.StartDate)
     {
         <h1>@ViewBag.Election.ElectionName Candidates</h1>
 
@@ -112,10 +112,10 @@
                      }
             </div>
     }
-    else
-    {
-        <h2>Election Has Ended. To View Result Please</h2>
-         <a class="btn btn-outline-primary" asp-action="Result" asp-controller="VotingBooth" asp-route-id="@ViewBag.Election.Id">Click Here</a>
-    }
+else
+{
+    <h2>Election Has Ended. To View Result Please</h2>
+        <a class="btn btn-outline-primary" asp-action="Result" asp-controller="VotingBooth" asp-route-id="@ViewBag.Election.Id">Click Here</a>
+}
 
 

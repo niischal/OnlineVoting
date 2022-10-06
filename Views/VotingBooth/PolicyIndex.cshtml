@@ -5,26 +5,60 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var policies = ViewBag.Policies;
     string Y = "Yes", N = "No";
+    var canVote = ViewBag.canVote;
 }
 
 <h1>@ViewBag.Election.ElectionName</h1>
-<form asp-action="PolicyAddVote">
+@if (DateTime.Now >= ViewBag.Election.StartDate && DateTime.Now <= ViewBag.Election.EndDate)
+{
+    @if (canVote)
+    {
+        <form asp-action="PolicyAddVote">
+            <div>
+                @for (int i = 0; i < policies.Count; i++)
+                {
+                    <div class="col-md-4 col-xs-6 border-primary mb-3">
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-12">
+                                    <h4 class="card-header text-white bg-info">@policies[i].PolicyTitle</h4>
+                                    <p class="col-md-12">@policies[i].PolicyDescription</p>
+                                    <div class="card-footer">
+                                        <input hidden type="text" asp-for="@Model[i].Id" value="@policies[i].Id" />
+                                        <div class="btn btn-success text-white">
+                                            <input type="radio" class="@policies[i].PolicyTitle" value="@Y" asp-for="@Model[i].Vote" />Yes
+                                        </div>
+                                        <div class="btn btn-success text-white">
+                                            <input type="radio" class="@policies[i].PolicyTitle" value="@N" asp-for="@Model[i].Vote" checked />No
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <input type="submit" value="Sumbit" class="btn btn-primary" style="margin:20px 0px ;">
+            </div>
+        </form>
+    }
+    else
+    {
+        <h4>Already Voted</h4>
+    }
+
+}
+else if (DateTime.Now <= ViewBag.Election.StartDate)
+{
     <div>
-        @for (int i =0;i<policies.Count;i++) {
+        @for (int i = 0; i < policies.Count; i++)
+        {
             <div class="col-md-4 col-xs-6 border-primary mb-3">
-                <div class="card mb-3" >
+                <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-12">
                             <h4 class="card-header text-white bg-info">@policies[i].PolicyTitle</h4>
                             <p class="col-md-12">@policies[i].PolicyDescription</p>
                             <div class="card-footer">
-                                <input hidden type="text" asp-for="@Model[i].Id" value="@policies[i].Id"/>
-                                <div class="btn btn-success text-white">
-                                    <input type="radio"  class="@policies[i].PolicyTitle" value="@Y" asp-for="@Model[i].Vote"/>Yes
-                                </div>
-                                <div class="btn btn-success text-white">
-                                    <input type="radio"  class="@policies[i].PolicyTitle" value="@N" asp-for="@Model[i].Vote" checked/>No
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -32,5 +66,11 @@
             </div>
         }
         <input type="submit" value="Sumbit" class="btn btn-primary" style="margin:20px 0px ;">
-    </div>   
-</form>
+    </div>
+}
+else
+{
+    <h2>Election Has Ended. To View Result Please</h2>
+    <a class="btn btn-outline-primary" asp-action="Result" asp-controller="VotingBooth" asp-route-id="@ViewBag.Election.Id">Click Here</a>
+}
+

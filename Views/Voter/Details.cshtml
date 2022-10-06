@@ -28,13 +28,20 @@
             @Html.DisplayNameFor(model => model.Voter)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VoterId)
+            @ViewBag.User.UserName
         </dd>
     </dl>
 </div>
 
 <div>
-    <a asp-action="Accept" asp-route-id="@Model.ReqId"><i class="bi bi-person-check-fill"></i> Accept</a> |
-    <a asp-action="Discard" asp-route-id="@Model.ReqId"><i class="bi bi-person-x-fill"></i> Discard</a> |
-    <a asp-action="Details" asp-route-id="@Model.ReqId"><i class="bi bi-info-circle-fill"></i></a>
+    <div class="col-auto">
+        <form asp-action="Accept">
+            <input type="submit" asp-action="Accept" asp-route-id="@Model.ReqId" value="Accept" class="btn btn-primary" />
+        </form>
+    </div>
+    <div class="col-auto">
+        <form asp-action="Discard">
+            <input type="submit" asp-action="Discard" asp-route-id="@Model.ReqId" value="Discard" class="btn btn-primary" />
+        </form>
+    </div>
 </div>

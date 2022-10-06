@@ -38,6 +38,7 @@ namespace OnlineVoting.Controllers
                 vr.ElectionId = voterDetails.ElectionId;
                 vr.UniqueId = voterDetails.UniqueId;
                 vr.UserId = _userManager.GetUserId(User);
+                vr.canVote = true;
                 _context.Voters.Add(vr);
                 _context.SaveChanges();
                 var voterReg=AddToVoterRegistration(vr);
@@ -109,8 +110,9 @@ namespace OnlineVoting.Controllers
         {
             var voterDetails = _context.VoterRegistrations.Where(x => x.ReqId == id).FirstOrDefault();
             ViewBag.Election = _context.Elections.Where(x => x.Id == voterDetails.ElectionId).Select(x => x.ElectionName).FirstOrDefault();
-
-
+            var voter = _context.Voters.Where(x => x.ReqId == id).FirstOrDefault();
+            var user = _context.Users.Where(x => x.Id == voter.UserId).FirstOrDefault();
+            ViewBag.User= user;
             return View(voterDetails);
         }
     }

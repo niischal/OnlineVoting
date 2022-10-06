@@ -265,6 +265,7 @@ namespace OnlineVoting.Data
                 {
                     var newAdminUser = new ApplicationUser()
                     {
+                        Id = "2761f36e-62d3-4ee6-bd64-40a4ed281ab8",
                         FirstName = "Admin",
                         LastName = "Admin",
                         UserName = "admin",
@@ -283,6 +284,7 @@ namespace OnlineVoting.Data
                 {
                     var newVoter = new ApplicationUser()
                     {
+                        Id= "552dd77b-f9c6-4029-bb55-635b02b3953d",
                         FirstName = "Test",
                         LastName = "Voter",
                         UserName = "testVoter",
@@ -303,8 +305,8 @@ namespace OnlineVoting.Data
                 context.Database.EnsureCreated();
                 if (!context.UserElections.Any())
                 {
-                    var admin = "f5629a6e-867d-4983-96f2-dabf9ebe7cc5";
-                    var testVoter = "c4159617-c244-4af5-9a9c-4997deda90c1"; 
+                    var admin = "2761f36e-62d3-4ee6-bd64-40a4ed281ab8";
+                    var testVoter = "552dd77b-f9c6-4029-bb55-635b02b3953d"; 
                     context.UserElections.AddRange(new List<UserElection>()
                     {
                         new UserElection()
@@ -321,17 +323,8 @@ namespace OnlineVoting.Data
                         {
                             UserId = admin,
                             ElectionId = 3
-                        },
-                        new UserElection()
-                        {
-                            UserId = testVoter,
-                            ElectionId = 1
-                        },
-                        new UserElection()
-                        {
-                            UserId = testVoter,
-                            ElectionId = 2
                         }
+                    
                     });
                     context.SaveChanges();
                 }
