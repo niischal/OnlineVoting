@@ -28,7 +28,7 @@ namespace OnlineVoting.Models
 
         //VerificationRequest
         public int? ReqId { get; set; }
-        [ForeignKey("NotiId")]
-        public VoterRegistration? Noti { get; set; }
+        [ForeignKey("ReqId")]
+        public VoterRegistration? Request { get; set; }
     }  
 }

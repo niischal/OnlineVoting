@@ -374,9 +374,6 @@ namespace OnlineVoting.Migrations
                     b.Property<int?>("ElectionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("NotiId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ReqId")
                         .HasColumnType("int");
 
@@ -395,9 +392,9 @@ namespace OnlineVoting.Migrations
 
                     b.HasIndex("ElectionId");
 
-                    b.HasIndex("NotiId")
+                    b.HasIndex("ReqId")
                         .IsUnique()
-                        .HasFilter("[NotiId] IS NOT NULL");
+                        .HasFilter("[ReqId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -540,9 +537,9 @@ namespace OnlineVoting.Migrations
                         .WithMany()
                         .HasForeignKey("ElectionId");
 
-                    b.HasOne("OnlineVoting.Models.VoterRegistration", "Noti")
+                    b.HasOne("OnlineVoting.Models.VoterRegistration", "Request")
                         .WithOne()
-                        .HasForeignKey("OnlineVoting.Models.Voter", "NotiId");
+                        .HasForeignKey("OnlineVoting.Models.Voter", "ReqId");
 
                     b.HasOne("OnlineVoting.Models.ApplicationUser", "User")
                         .WithMany("Voter")
@@ -552,7 +549,7 @@ namespace OnlineVoting.Migrations
 
                     b.Navigation("Election");
 
-                    b.Navigation("Noti");
+                    b.Navigation("Request");
 
                     b.Navigation("User");
                 });

@@ -18,10 +18,10 @@ namespace OnlineVoting.Controllers
             _context = context;
             _userManager = userManager;
         }
-        private async Task<Voter?> GetVoter()
+        private async Task<Voter?> GetVoter(int eId)
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
-            var voter = _context.Voters.Where(x => x.UserId == user.Id).FirstOrDefault();
+            var voter = _context.Voters.Where(x => x.UserId == user.Id && x.ElectionId== eId).FirstOrDefault();
             return voter;
         }
         public async Task<IActionResult> Index(int Id)
@@ -37,7 +37,7 @@ namespace OnlineVoting.Controllers
 
             } );
             ViewBag.Positions = positions;
-            var voter = await GetVoter();
+            var voter = await GetVoter(Id);
             ViewBag.canVote = voter.canVote;
 
             return View();
@@ -73,7 +73,7 @@ namespace OnlineVoting.Controllers
                     _context.SaveChanges();
 
                 }
-                var voter =  await GetVoter();
+                var voter =  await GetVoter(vc.eId);
                 voter.canVote = false;
                 _context.Update(voter);
                 _context.SaveChanges();
@@ -98,7 +98,7 @@ namespace OnlineVoting.Controllers
             ViewBag.Election = election;
             ViewBag.Policies = policies;
 
-            var voter = await GetVoter();
+            var voter = await GetVoter(Id);
             ViewBag.canVote = voter.canVote;
 
             return View();
@@ -119,6 +119,7 @@ namespace OnlineVoting.Controllers
         {
             if (policyVotes != null)
             {
+                
                 foreach (var policyVote in policyVotes)
                 {
                     Policy? p = _context.Policies.Find(policyVote.Id);
@@ -134,8 +135,11 @@ namespace OnlineVoting.Controllers
                     _context.Attach(p);
                     _context.Entry(p).State = EntityState.Modified;
                     _context.SaveChanges();
+
+                    
                 }
-                var voter = await GetVoter();
+                var eId = policyVotes.Select(x => x.eId).FirstOrDefault();
+                var voter = await GetVoter(eId);
                 voter.canVote = false;
                 _context.Update(voter);
                 _context.SaveChanges();

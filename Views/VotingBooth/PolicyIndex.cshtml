@@ -31,6 +31,8 @@
                                         <div class="btn btn-success text-white">
                                             <input type="radio" class="@policies[i].PolicyTitle" value="@N" asp-for="@Model[i].Vote" checked />No
                                         </div>
+
+                                        <input type="hidden" asp-for="@Model[i].eId" value="@ViewBag.Election.Id">
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +67,6 @@ else if (DateTime.Now <= ViewBag.Election.StartDate)
                 </div>
             </div>
         }
-        <input type="submit" value="Sumbit" class="btn btn-primary" style="margin:20px 0px ;">
     </div>
 }
 else

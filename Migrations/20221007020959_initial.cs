@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineVoting.Migrations
 {
-    public partial class keyForVoterReg : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -295,8 +295,7 @@ namespace OnlineVoting.Migrations
                     canVote = table.Column<bool>(type: "bit", nullable: false),
                     ElectionId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReqId = table.Column<int>(type: "int", nullable: true),
-                    NotiId = table.Column<int>(type: "int", nullable: true)
+                    ReqId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -313,8 +312,8 @@ namespace OnlineVoting.Migrations
                         principalTable: "Elections",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Voters_VoterRegistrations_NotiId",
-                        column: x => x.NotiId,
+                        name: "FK_Voters_VoterRegistrations_ReqId",
+                        column: x => x.ReqId,
                         principalTable: "VoterRegistrations",
                         principalColumn: "ReqId");
                 });
@@ -394,11 +393,11 @@ namespace OnlineVoting.Migrations
                 column: "ElectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Voters_NotiId",
+                name: "IX_Voters_ReqId",
                 table: "Voters",
-                column: "NotiId",
+                column: "ReqId",
                 unique: true,
-                filter: "[NotiId] IS NOT NULL");
+                filter: "[ReqId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Voters_UserId",
