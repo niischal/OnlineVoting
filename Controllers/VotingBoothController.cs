@@ -8,7 +8,7 @@ using OnlineVoting.Models;
 
 namespace OnlineVoting.Controllers
 {
-    [Authorize(Roles = UserRoles.Voter)]
+    [Authorize]
     public class VotingBoothController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -18,12 +18,14 @@ namespace OnlineVoting.Controllers
             _context = context;
             _userManager = userManager;
         }
+
         private async Task<Voter?> GetVoter(int eId)
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
             var voter = _context.Voters.Where(x => x.UserId == user.Id && x.ElectionId== eId).FirstOrDefault();
             return voter;
         }
+        [Authorize(Roles = UserRoles.Voter)]
         public async Task<IActionResult> Index(int Id)
         {
             Election? election = _context.Elections.Find(Id);
@@ -58,7 +60,7 @@ namespace OnlineVoting.Controllers
             ViewBag.Positions = positions;
             return View();
         }
-
+        [Authorize(Roles = UserRoles.Voter)]
         [HttpPost]
         public async Task<IActionResult> AddVote(VotedCandidate vc)
         {
@@ -82,7 +84,7 @@ namespace OnlineVoting.Controllers
             return RedirectToAction("Index","Election");
         }
 
-
+        [Authorize(Roles = UserRoles.Voter)]
         public async Task<IActionResult> PolicyIndexAsync(int Id)
         {
             Election? election = _context.Elections.Find(Id);
@@ -114,6 +116,7 @@ namespace OnlineVoting.Controllers
             return View(policies);
         }
 
+        [Authorize(Roles = UserRoles.Voter)]
         [HttpPost]
         public async Task<IActionResult> PolicyAddVoteAsync(List<PolicyVote> policyVotes)
         {

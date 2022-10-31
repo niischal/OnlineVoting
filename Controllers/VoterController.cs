@@ -100,8 +100,10 @@ namespace OnlineVoting.Controllers
         [Authorize(Roles = UserRoles.Admin)]
         public IActionResult Discard(int id)
         {
-            var VoterDetails = _context.VoterRegistrations.Where(x => x.ReqId == id).FirstOrDefault();
-            _context.VoterRegistrations.Remove(VoterDetails);
+            var voterDetails = _context.VoterRegistrations.Where(x => x.ReqId == id).FirstOrDefault();
+            var voters = _context.Voters.Where(x => x.ReqId == id).FirstOrDefault();
+            voters.ReqId = null;
+            _context.VoterRegistrations.Remove(voterDetails);
             _context.SaveChanges();
             return RedirectToAction("VotersToBeVerified");
         }

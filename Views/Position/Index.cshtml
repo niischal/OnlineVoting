@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Positions</h1>
 
 
 <table class="table">
@@ -43,13 +43,13 @@
                 <a asp-action="Remove" asp-route-id="@item.Id"><i class="bi bi-trash-fill"></i></a>
             </td>
              <td>
-                <div class="btn btn-outline-primary">
-                       <a asp-action="Index" asp-controller="Candidate" asp-route-id="@item.Id">View Candidates</a>
+                <div >
+                        <a asp-action="Index" asp-controller="Candidate" asp-route-id="@item.Id" class="btn btn-outline-primary">View Candidates</a>
                 </div>
             </td>
             <td>
-                <div class="btn btn-outline-primary">
-                    <a asp-action="Create" asp-controller="Candidate" asp-route-id="@item.Id">Add Candidate</a>
+                <div>
+                        <a asp-action="Create" asp-controller="Candidate" asp-route-id="@item.Id" class="btn btn-outline-primary">Add Candidate</a>
                 </div>
             </td>
         </tr>
