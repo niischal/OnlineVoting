@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineVoting.Data;
 using OnlineVoting.Data.Services;
@@ -8,6 +9,7 @@ using OnlineVoting.Models;
 
 namespace OnlineVoting.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

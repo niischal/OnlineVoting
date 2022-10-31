@@ -32,6 +32,18 @@ namespace OnlineVoting.Controllers
         {
             if (voterDetails == null) return View(voterDetails);
             List<Voter> voter = _context.Voters.Where(x => x.UniqueId == voterDetails.UniqueId && x.ElectionId == voterDetails.ElectionId).ToList();
+            var election = _context.Elections.Where(x => x.Id == voterDetails.ElectionId).FirstOrDefault();
+            if (election == null)
+            {
+                TempData["Error"] = "Election does not exists!!";
+                return View(voterDetails);
+            }
+            if (election.StartDate > DateTime.Now)
+            {
+                TempData["Error"] = "Election already started!!";
+                return View(voterDetails);
+            }
+
             if (voter.Count == 0)
             {
                 Voter vr = new Voter();
@@ -46,7 +58,8 @@ namespace OnlineVoting.Controllers
                 _context.Voters.Update(vr);
                 _context.SaveChanges();
             }
-
+            
+            
             return RedirectToAction("Success");
         }
         private VoterRegistration AddToVoterRegistration(Voter voter)
