@@ -119,7 +119,7 @@ namespace OnlineVoting.Controllers
             var response= await _services.Register(accountDetails);
             TempData["Error"] = "";
             if (!response.Succeeded)
-            {
+            {   
                 foreach (var error in response.Errors)
                 {
                     TempData["Error"] = TempData["Error"] + "\n" + "-" +  error.Description;

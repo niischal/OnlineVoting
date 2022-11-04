@@ -38,7 +38,7 @@ namespace OnlineVoting.Controllers
                 TempData["Error"] = "Election does not exists!!";
                 return View(voterDetails);
             }
-            if (election.StartDate > DateTime.Now)
+            if (election.StartDate < DateTime.Now)
             {
                 TempData["Error"] = "Election already started!!";
                 return View(voterDetails);
