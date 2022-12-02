@@ -62,7 +62,7 @@ namespace OnlineVoting.Controllers
             ViewBag.EId = candidate.PositionId;
             await _service.UpdateCandidate(id, candidate);
 
-            return Redirect("../Index/" + id);
+            return Redirect("../Index/" + candidate.PositionId);
         }
         [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Remove(int id)

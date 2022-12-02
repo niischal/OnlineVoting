@@ -54,7 +54,7 @@ namespace OnlineVoting.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id, [Bind("PositionTitle,Description.")] Position position)
+        public async Task<IActionResult> Update(int id, [Bind("PositionTitle,Description")] Position position)
         {
 
             if (ModelState.IsValid)
@@ -65,7 +65,7 @@ namespace OnlineVoting.Controllers
             ViewBag.EId = position.ElectionId;
             await _service.UpdatePosition(id, position);
 
-            return Redirect("../Index/" + id);
+            return Redirect("../Index/" + position.ElectionId);
         }
         public async Task<IActionResult> Remove(int id)
         {

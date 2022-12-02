@@ -100,28 +100,28 @@ namespace OnlineVoting.Data
                         { 
                             //CandidateId = 1,
                             CandidateName = "Iron Man",
-                            CandidateIcon = "http://dotnethow.net/images/actors/actor-1.jpeg",
+                            CandidateIcon = "https://www.gamespot.com/a/uploads/original/1601/16018044/4033106-marvels-avengers-iron-man.png",
                             PositionId = 1
                         },
                         new Candidate()
                         {
                             //CandidateId = 1,
                             CandidateName = "Thanos",
-                            CandidateIcon = "http://dotnethow.net/images/actors/actor-2.jpeg",
+                            CandidateIcon = "https://www.prashantabhishek.com/blog/uploads/20190427210319thanos-avengers-infinity.jpg",
                             PositionId = 1
                         },
                         new Candidate()
                         {
                            // CandidateId = 1,
                             CandidateName = "Spider Man",
-                            CandidateIcon = "http://dotnethow.net/images/actors/actor-5.jpeg",
+                            CandidateIcon = "https://stylecaster.com/wp-content/uploads/2021/11/Spider-Man-No-Way-Home-2.jpg",
                             PositionId = 2
                         },
                         new Candidate()
                         {
                             //CandidateId = 1,
                             CandidateName = "Green Goblin",
-                            CandidateIcon = "http://dotnethow.net/images/actors/actor-5.jpeg",
+                            CandidateIcon = "https://i.ytimg.com/vi/MiaTyUcu5VM/maxresdefault.jpg",
                             PositionId = 2
                         },
                         new Candidate()

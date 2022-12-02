@@ -12,8 +12,8 @@ using OnlineVoting.Data;
 namespace OnlineVoting.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221007020959_initial")]
-    partial class initial
+    [Migration("20221104063723_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
